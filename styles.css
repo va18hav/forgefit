@@ -29,6 +29,10 @@ body {
   line-height: 1.6;
 }
 
+body.no-scroll {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -156,6 +160,11 @@ h3 {
   border-bottom: 1px solid var(--border-color);
 }
 
+.site-header.nav-open {
+  background: rgba(10, 10, 10, 0.95);
+  border-bottom: 1px solid var(--border-color);
+}
+
 .nav {
   display: flex;
   gap: 1.5rem;
@@ -182,6 +191,54 @@ h3 {
 
 .nav a:hover::after {
   width: 100%;
+}
+
+.header-cta {
+  flex-shrink: 0;
+}
+
+.nav-cta {
+  display: none;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: rgba(18, 18, 18, 0.8);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.menu-toggle .bar {
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+  transition: var(--transition);
+}
+
+.site-header.nav-open .menu-toggle {
+  border-color: rgba(192, 72, 72, 0.5);
+}
+
+.site-header.nav-open .menu-toggle .bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.site-header.nav-open .menu-toggle .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header.nav-open .menu-toggle .bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 .hero {
@@ -637,20 +694,38 @@ cite {
 }
 
 @media (max-width: 900px) {
-  .site-header {
-    flex-wrap: wrap;
+  section {
+    padding: 4.5rem clamp(1.25rem, 4vw, 2.5rem);
   }
 
-  .nav {
-    order: 3;
-    width: 100%;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  .split {
+    text-align: center;
+  }
+
+  .split-text {
+    order: 2;
+  }
+
+  .split-media {
+    order: 1;
+  }
+
+  .facility-grid,
+  .program-grid,
+  .team-grid,
+  .tier-grid,
+  .contact {
+    gap: 1.25rem;
+  }
+
+  .quote-slider {
+    padding: 2.25rem;
   }
 
   .schedule-row {
     grid-template-columns: 1fr;
     text-align: left;
+    gap: 0.5rem;
   }
 }
 
@@ -672,5 +747,81 @@ cite {
 
   .tab-list {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header-cta {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav {
+    position: fixed;
+    inset: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(16px);
+    transform: translateY(-100%);
+    transition: transform 0.4s ease, opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    padding: 4rem 1.5rem;
+  }
+
+  .site-header.nav-open .nav {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav a {
+    font-size: 1rem;
+  }
+
+  .nav-cta {
+    display: inline-flex;
+    width: min(320px, 80%);
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: clamp(2.4rem, 8vw, 3.2rem);
+  }
+
+  .quote-slider {
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-info {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: 1rem;
+  }
+
+  .hero {
+    padding: 0 1rem;
+  }
+
+  .program-card,
+  .tier-card,
+  .coach-card,
+  .facility-body {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .quote-text {
+    font-size: 1.1rem;
   }
 }

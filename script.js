@@ -6,6 +6,8 @@ const slider = document.querySelector('#quote-slider');
 const sliderText = slider.querySelector('.quote-text');
 const sliderCite = slider.querySelector('cite');
 const sliderButtons = slider.querySelectorAll('.slider-btn');
+const menuToggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelectorAll('#primary-nav a');
 
 const scheduleData = {
   monday: [
@@ -73,6 +75,7 @@ setupHeaderScroll();
 setupTabs();
 setupTestimonials();
 setCurrentYear();
+setupMobileNav();
 
 function revealElements() {
   reveals.forEach(el => observer.observe(el));
@@ -142,4 +145,25 @@ function setupTestimonials() {
 function setCurrentYear() {
   const yearEl = document.querySelector('#year');
   yearEl.textContent = new Date().getFullYear();
+}
+
+function setupMobileNav() {
+  if (!menuToggle) return;
+
+  const toggleNav = () => {
+    const isOpen = header.classList.toggle('nav-open');
+    document.body.classList.toggle('no-scroll', isOpen);
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  };
+
+  menuToggle.addEventListener('click', toggleNav);
+
+  navLinks.forEach(link =>
+    link.addEventListener('click', () => {
+      if (!header.classList.contains('nav-open')) return;
+      header.classList.remove('nav-open');
+      document.body.classList.remove('no-scroll');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    })
+  );
 }
